@@ -2,20 +2,22 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Amazon Transcribe WebSocket API - Sample Application</title>
+    <title>Amazon Transcribe WebSocket API & Amazon Translate API</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <link rel="stylesheet" href="https://cdn.shoelace.style/1.0.0-beta24/shoelace.css">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.922.0.min.js"></script>
 </head>
 
 <body>
     <div class="container">
         <h1>
-            Real-time Audio Transcription
+            Real-time Audio Transcription & Translation
         </h1>
         <p class="small-caps">
-            Using the <a href="https://aws.amazon.com/transcribe/">Amazon Transcribe</a> WebSocket API
+            Using the <a href="https://aws.amazon.com/transcribe/">Amazon Transcribe</a> WebSocket API and 
+            <a href="https://aws.amazon.com/trasnlate/">Amazon Translate</a> API
         </p>
         <hr/>
         <p>
@@ -27,33 +29,13 @@
 
         <div class="row">
             <div class="col">
-                <label>Access ID:</label>
-                <input type="password" id="access_id" placeholder="ACCESS ID" value="" />
+                <label>Access Key:</label>
+                <input type="password" id="access_key" placeholder="ACCESS Key" value="" />
 
-                <label>Secret Key:</label>
-                <input type="password" id="secret_key" placeholder="SECRET KEY" value="" />
+                <label>Secret Access Key:</label>
+                <input type="password" id="secret_access_key" placeholder="SECRET ACCESS KEY" value="" />
                 <label>Session Token (if using MFA):</label>
                 <input type="password" id="session_token" placeholder="SESSION TOKEN" value="" />
-            </div>
-            <div class="col">
-                <label>Language: </label>
-                <select id="language">
-                    <optgroup label="English">
-                        <option value="en-US">US English (en-US)</option>
-                        <option value="en-AU">Australian English (en-AU)</option>
-                        <option value="en-GB">British English (en-GB)</option>
-                    </optgroup>
-                    <optgroup label="Japanese">
-                        <option value="ja-JP">Japanese (ja-JP)</option>
-                    </optgroup>
-                    <optgroup label="French">
-                        <option value="fr-CA">Canadian French (fr-CA)</option>
-                        <option value="fr-FR">French (fr-FR)</option>
-                    </optgroup>
-                    <optgroup label="Spanish">
-                        <option value="es-US">US Spanish (es-US)</option>
-                    </optgroup>
-                </select>
 
                 <label>Region:</label>
                 <select id="region">
@@ -65,9 +47,46 @@
                     <option value="ca-central-1">Canada (Central)</option>
                     <option value="eu-west-1">EU (Ireland)</option>
                 </select>
+
             </div>
+
+            <div class="col">
+                <label>Language to transcribe: </label>
+                <select id="transcribe-language">
+                    <optgroup label="English">
+                        <option value="en-US">US English (en-US)</option>
+                        <option value="en-AU">Australian English (en-AU)</option>
+                        <option value="en-GB">British English (en-GB)</option>
+                    </optgroup>
+                    <optgroup label="Japanese">
+                        <option value="ja-JP">Japanese (ja-JP)</option>
+                    </optgroup>
+                </select>
+
+                <label>Sampling Rate:</label>
+                <select id="sampling-rate">
+                    <option value="8000">8000 Hz</option>
+                    <option value="16000" selected>16000 Hz</option>
+                    <option value="44100">44100 Hz</option>
+                </select>
+            </div>
+
         </div>
-        <textarea id="transcript" placeholder="Press Start and speak into your mic" rows="5"
+        <textarea id="transcript" placeholder="Press Start and speak into your mic" rows="15"
+            readonly="readonly"></textarea>
+
+        <div class="row">
+            <div class="col">
+                <label>Translate target language: </label>
+                <select id="translate-language">
+                    <option value="en">English</option>
+                    <option value="ja" selected>Japanese</option>
+                </select>
+            </div>
+            
+        </div>
+
+        <textarea id="translation" placeholder="Translated text here" rows="15"
             readonly="readonly"></textarea>
         <div class="row">
             <div class="col">
@@ -89,7 +108,7 @@
         </div>
     </div>
 
-    <a href="https://github.com/aws-samples/amazon-transcribe-websocket-static" aria-label="View source on GitHub">
+    <a href="https://github.com/akitsukada/amazon-transcribe-websocket-static" aria-label="View source on GitHub">
         <svg id="github" width="80" height="80" viewBox="0 0 250 250" aria-hidden="true">
             <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
             <path

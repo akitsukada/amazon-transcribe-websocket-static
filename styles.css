@@ -3,8 +3,15 @@ body {
 }
 
 #transcript {
-    margin: 30px 0;
+    margin: 10px 0;
     white-space: pre-wrap;
+    width: 100%;
+}
+
+#translation {
+    margin: 5px 0;
+    white-space: pre-wrap;
+    width: 100%;
 }
 
 #start-button,
