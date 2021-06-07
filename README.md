@@ -1,4 +1,4 @@
-## Amazon Transcribe Websocket Static
+## Amazon Transcribe & Amazon Translate demo
 
 [Try it out](https://transcribe-websockets.go-aws.com/)
 
